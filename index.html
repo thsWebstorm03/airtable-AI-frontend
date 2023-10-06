@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+      <style>
+         .main-container{
+            max-width: 1600px;
+            margin: auto;
+            padding: 15px;
+         }
+         .box-container{
+            column-gap: 10px;
+         }
+         .custom-input{
+            background-color: #171F2B;
+            color: #FFFFFF;
+            border-width: 0;
+            padding: 10px 20px;
+            font-size: 18px;
+            /* line-height: 26px; */
+            height: 3rem;
+         }
+         .custom-list-item{
+            padding: 20px 24px;
+            border: 1px 0 0 0 solid #2A3647;
+            background: transparent;
+            color: #FFF;
+            font-size: 18px;
+            line-height: 22px;
+            &:hover{
+               cursor: pointer;
+            }
+         }
+
+      </style>
+   </head>
+   <body class="main-container" style="background-color: #2C3747;height: 650px;">
+      <div>
+         <img src="logo.png" alt="logo" style="padding: 25px 0;"/>
+      </div>
+      <div class="row">
+         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8">
+            <div class="container" style="background-color: #1F2937;">
+               <div class="row">
+                  <div class="col-12 col-sm-12 col-md-5 " >
+                     <div class="mt-2 mb-2" style=" min-height: 450px; background-color: rgba(0, 255, 255, 0);">
+                     </div>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-7" style=" display: flex; align-items: center; justify-content: center; flex-direction: column; ">
+                     <div class="mt-2 mb-2" >
+                        <div class="card" style="background-color: transparent; border-width: 0;">
+                           <input type="text" id="address1" class="form-control custom-input mt-3"  placeholder="18-й микрорайон , 19" style="border-radius: 30px;">
+                           <div class="w-100" style="display: flex; flex-direction: row; column-gap: 20px; justify-content: space-between;">
+                              <input type="text" id="entrance1" class="form-control custom-input mt-3"  placeholder="12" style="margin-right: 10px;">
+                              <input type="text" id="entrance2" class="form-control custom-input mt-3"  placeholder="Подьезд">
+                           </div>
+                           <input type="text" id="comment1" class="form-control custom-input mt-3"  placeholder="Комментарий" style="border-radius: 30px;">
+                           <input type="text" id="address2" class="form-control custom-input mt-3"  placeholder="Введите адресс">
+                           <input type="text" id="comment2" class="form-control custom-input mt-3 mb-2"  placeholder="Комментарий 2">
+                           <input type="tel" id="phone" class="form-control custom-input mt-3 mb-2"  placeholder="Номер телефона" value="77711474766">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div style="text-align: center;">
+               <input type="tel" id="price" class="form-control custom-input"  placeholder="Стоимость поездки" style="margin:auto; margin-top: 40px !important; width: 350px;">
+               <input id="order" class="btn btn-primary" type="button" value="Создать заявку" style="margin: auto; margin-top: 20px; padding: 19px 120px; line-height: 1.5rem; font-size: 16px; border-radius: 30px;"> 
+            </div>
+         </div>
+         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+            <div class="container" style="background-color: #1F2937;">
+               <div class="row" style="padding: 26px;">
+                  <h3 id="total_count" class="text-center text-white">Все поездки </h3>
+               </div>
+               <div class="row" style="background-color: #2C3A4F; justify-content: center;">
+                  <h5 class="text-center" style="color: #5B759A;">выберите шаблон</h5>
+               </div>
+               <div class="row">
+                  <div id="templates_list" class="list-group w-100" style="max-height: 450px; overflow-y: scroll;">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <script src="https://code.jquery.com/jquery-1.11.2.min.js" crossorigin="anonymous"></script>
+   </body>
+</html>
