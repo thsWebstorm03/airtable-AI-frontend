@@ -272,7 +272,7 @@
             if(selDIagnosticID){
 
                setLoading(true);
-               $.get('https://52.64.28.120:5001/api/points/getPoints', function (res) {
+               $.get('http://52.64.28.120:5001/api/points/getPoints', function (res) {
                   setLoading(false);
                   res = $.parseJSON(res);
                   reloadItems(res)
