@@ -272,7 +272,7 @@
             if(selDIagnosticID){
 
                setLoading(true);
-               $.get('https://airtable-ai.onrender.com/api/points/getPoints', function (res) {
+               $.get('https://52.64.28.120/api/points/getPoints', function (res) {
                   setLoading(false);
                   res = $.parseJSON(res);
                   reloadItems(res)
