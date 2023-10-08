@@ -1,0 +1,27 @@
+/* Style the scrollbar track */
+::-webkit-scrollbar {
+   width: 12px;  /* Width of the vertical scrollbar */
+   height: 15px; /* Height of the horizontal scrollbar */
+}
+
+/* Handle or Thumb */
+::-webkit-scrollbar-thumb {
+   background: #888; /* Color of the draggable scrollbar handle */
+   border-radius: 4px; /* Makes the handle's corners rounded */
+}
+
+/* Handle or Thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+   background: #555;  /* Darken the handle color when hovered */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+   background: rgba(125, 128, 128, 0.815); /* Color of the scrollbar track */
+   border-radius: 4px;  /* Makes the track's corners rounded */
+}
+
+/* Optional: Style the buttons (up/down arrow) on the track - rarely used */
+::-webkit-scrollbar-button {
+   display: none; /* Disables the buttons */
+}

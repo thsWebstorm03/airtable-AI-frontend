@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <meta charset="utf-8" />
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+      <meta charset="utf-8"/>
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+      <link
+         rel="stylesheet"
+         href="./spinner.css">
+      <link
+         rel="stylesheet"
+         href="./scrollbar.css">
       <style>
-         .main-container{
+         .main-container {
             max-width: 1600px;
             margin: auto;
             padding: 15px;
          }
-         .box-container{
+         .box-container {
             column-gap: 10px;
          }
-         .custom-input{
+         .sub-caption{
+            font-size: 20px;
+            color: #b9b9b9;
+         }
+         .custom-input {
             background-color: #171F2B;
             color: #FFFFFF;
             border-width: 0;
@@ -21,70 +33,254 @@
             /* line-height: 26px; */
             height: 3rem;
          }
-         .custom-list-item{
-            padding: 20px 24px;
+         .custom-list-item {
+            padding: 13px 24px;
             border: 1px 0 0 0 solid #2A3647;
-            background: transparent;
+            background: #00000010;
             color: #FFF;
             font-size: 18px;
             line-height: 22px;
-            &:hover{
+            &:hover {
                cursor: pointer;
             }
+         }
+
+         #spinner{
+            position: fixed; 
+            z-index: 100;
+            left: 0; 
+            right: 0; 
+            top: 0; 
+            bottom: 0; 
+            background-color: rgba(49, 79, 205, 0.21);
+            display: none;
+            opacity: 0;
+            transition: all 0.3s ease-in;
+         }
+         .spinner-show{
+            display: block !important;
+            opacity: 1 !important;
+         }
+
+         .box-item{
+            background-color: #00000000;
+         }
+
+         .box-item:first-child{
+            margin-left: 0;
+            padding-left: 0 !important;
+         }
+
+         .box-item:last-child{
+            margin-right: 0;
+            padding-right: 0 !important;
          }
 
       </style>
    </head>
    <body class="main-container" style="background-color: #2C3747;height: 650px;">
       <div>
-         <img src="logo.png" alt="logo" style="padding: 25px 0;"/>
+         <img src="logo.png" alt="logo" style="width: 200px; height: 80px;"/>
       </div>
       <div class="row">
-         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8">
-            <div class="container" style="background-color: #1F2937;">
-               <div class="row">
-                  <div class="col-12 col-sm-12 col-md-5 " >
-                     <div class="mt-2 mb-2" style=" min-height: 450px; background-color: rgba(0, 255, 255, 0);">
+        
+         <div class="col-12">
+            <div class="container" >
+               <div class="row" style="padding: 26px; background-color: #1F2937;">
+                  <div class="col-4">
+                     <h3 id="total_count" class=" text-white">Result <span id="name" class="sub-caption">(Customer: )</span></h3>
+                  </div>
+                  <div class="col-4">
+                     <input
+                        type="text"
+                        id="search"
+                        class="form-control custom-input w-100"
+                        placeholder="Type the Diagnostic_ID..."
+                        style="margin:auto;">
+                  </div>
+                  <div class="col-4 text-right">
+                     <input
+                        id="points_btn"
+                        class="btn btn-primary"
+                        type="button"
+                        value="Calculate"
+                        style="margin: auto; padding: 10px 30px; line-height: 1.5rem; font-size: 16px; border-radius: 30px;">
+                  </div>
+               </div>
+
+               <div class="row" style="background-color: #2C3A4F; padding-left:20px; margin-top: 15px;">
+                  <h5 style="color: #5B759A;">Recommendations</h5>
+               </div>
+               
+               <div class="row mt-3">
+                  <div class="box-item col-6">
+                     <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                        <div style="font-size: 14px; padding: 10px 0 10px 20px; color: #585858; font-weight: bold;">Recommendation Top 1</div>
+                        <h3 id="recommendation1" class="text-center" style="padding-bottom: 10px;"></h3>
+                     </div>
+                        
+                  </div>
+                  <div class="box-item col-6">
+                     <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                        <div style="font-size: 14px; padding: 10px 0 10px 20px; color: #585858; font-weight: bold;">Recommendation Top 2</div>
+                        <h3 id="recommendation2" class="text-center" style="padding-bottom: 10px;"></h3>
                      </div>
                   </div>
-                  <div class="col-12 col-sm-12 col-md-7" style=" display: flex; align-items: center; justify-content: center; flex-direction: column; ">
-                     <div class="mt-2 mb-2" >
-                        <div class="card" style="background-color: transparent; border-width: 0;">
-                           <input type="text" id="address1" class="form-control custom-input mt-3"  placeholder="18-й микрорайон , 19" style="border-radius: 30px;">
-                           <div class="w-100" style="display: flex; flex-direction: row; column-gap: 20px; justify-content: space-between;">
-                              <input type="text" id="entrance1" class="form-control custom-input mt-3"  placeholder="12" style="margin-right: 10px;">
-                              <input type="text" id="entrance2" class="form-control custom-input mt-3"  placeholder="Подьезд">
-                           </div>
-                           <input type="text" id="comment1" class="form-control custom-input mt-3"  placeholder="Комментарий" style="border-radius: 30px;">
-                           <input type="text" id="address2" class="form-control custom-input mt-3"  placeholder="Введите адресс">
-                           <input type="text" id="comment2" class="form-control custom-input mt-3 mb-2"  placeholder="Комментарий 2">
-                           <input type="tel" id="phone" class="form-control custom-input mt-3 mb-2"  placeholder="Номер телефона" value="77711474766">
-                        </div>
+               </div>
+
+               <div class="row" style="background-color: #2C3A4F; padding-left:20px; margin-top: 15px;">
+                  <h5 class="text-center" style="color: #5B759A;">Points of Conditions</h5>
+               </div>
+
+               <div class="row mt-3">
+                  <div class="box-item col-4">
+                     <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                        <div style="font-size: 14px; padding: 10px 0 10px 20px;">LF</div>
+                        <h3 id="LF" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                     </div>
+                  </div>
+                  <div class="box-item col-4">
+                     <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                        <div style="font-size: 14px; padding: 10px 0 10px 20px;">LQS</div>
+                        <h3 id="LQS" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                     </div>
+                  </div>
+                  <div class="box-item col-4">
+                     <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                        <div style="font-size: 14px; padding: 10px 0 10px 20px;">LYD</div>
+                        <h3 id="LYD" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
                      </div>
                   </div>
                </div>
-            </div>
-            <div style="text-align: center;">
-               <input type="tel" id="price" class="form-control custom-input"  placeholder="Стоимость поездки" style="margin:auto; margin-top: 40px !important; width: 350px;">
-               <input id="order" class="btn btn-primary" type="button" value="Создать заявку" style="margin: auto; margin-top: 20px; padding: 19px 120px; line-height: 1.5rem; font-size: 16px; border-radius: 30px;"> 
-            </div>
-         </div>
-         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
-            <div class="container" style="background-color: #1F2937;">
-               <div class="row" style="padding: 26px;">
-                  <h3 id="total_count" class="text-center text-white">Все поездки </h3>
+               <div class="row mt-3">
+                  <div class="box-item col-4">
+                     <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                        <div style="font-size: 14px; padding: 10px 0 10px 20px;">YinDeficiency</div>
+                        <h3 id="YinDeficiency" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                     </div>
+                  </div>
+                  <div class="box-item col-4">
+                     <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                        <div style="font-size: 14px; padding: 10px 0 10px 20px;">Dampness</div>
+                        <h3 id="Dampness" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                     </div>
+                  </div>
+                  <div class="box-item col-4">
+                     <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                        <div style="font-size: 14px; padding: 10px 0 10px 20px;">QD</div>
+                        <h3 id="QD" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                     </div>
+                  </div>
                </div>
-               <div class="row" style="background-color: #2C3A4F; justify-content: center;">
-                  <h5 class="text-center" style="color: #5B759A;">выберите шаблон</h5>
-               </div>
-               <div class="row">
-                  <div id="templates_list" class="list-group w-100" style="max-height: 450px; overflow-y: scroll;">
+               <div class="row mt-3">
+                  <div class="box-item col-4">
+                     <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                        <div style="font-size: 14px; padding: 10px 0 10px 20px;">BS</div>
+                        <h3 id="BS" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                     </div>
+                  </div>
+                  <div class="box-item col-4">
+                     <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                        <div style="font-size: 14px; padding: 10px 0 10px 20px;">KD</div>
+                        <h3 id="KD" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                     </div>
+                  </div>
+                  <div class="box-item col-4">
+                     <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                        <div style="font-size: 14px; padding: 10px 0 10px 20px;">SD</div>
+                        <h3 id="SD" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                     </div>
                   </div>
                </div>
             </div>
          </div>
       </div>
+      <div id="spinner">
+         <div id="ui">
+            <div class="dice child">
+              <ol class="dice_list">
+                <li class="dice_list_item"></li>
+                <li class="dice_list_item"></li>
+                <li class="dice_list_item"></li>
+                <li class="dice_list_item"></li>
+                <li class="dice_list_item"></li>
+                <li class="dice_list_item"></li>
+              </ol>
+            </div>
+            <div class="dice parent">
+              <ol class="dice_list">
+                <li class="dice_list_item"></li>
+                <li class="dice_list_item break"></li>
+                <li class="dice_list_item"></li>
+                <li class="dice_list_item"></li>
+                <li class="dice_list_item bottom"></li>
+                <li class="dice_list_item"></li>
+              </ol>
+            </div>
+          </div>
+      </div>
+      <script
+         src="https://code.jquery.com/jquery-1.11.2.min.js"
+         crossorigin="anonymous"></script>
+      <script>
+         var selDIagnosticID;
+         const list = ['LF', 'LYD', 'LQS', 'YinDeficiency', 'Dampness', 'QD', 'BS', 'KD', 'SD', 'Recommendation - Top 1 Condition', 'Recommendation - Top 2'];
 
-      <script src="https://code.jquery.com/jquery-1.11.2.min.js" crossorigin="anonymous"></script>
+         $(document)
+            .ready(function () {
+               initializeUsers();
+               initializeEvents();
+            })
+
+         function initializeUsers() {
+            return;
+         }
+
+         function initializeEvents() {
+            $("#points_btn").on('click', getPoints);
+         }
+
+         function setLoading(b_loading) {
+            if (b_loading) {
+               $("#spinner").addClass("spinner-show");
+               $("#points_btn").val("loading...");
+            } else {
+               $("#spinner").removeClass("spinner-show");
+               $("#points_btn").val("Calculate");
+            }
+         }
+
+         function reloadItems(data){
+            console.log(data)
+            list.forEach(item => {
+               $(`#${item}`).text(data[`${item} Points`]);
+            })
+            $("#recommendation1").text(data["Recommendation - Top 1 Condition"]);
+            $("#recommendation2").text(data["Recommendation - Top 2"]);
+         }
+
+         function clearItems(){
+            list.forEach(item => {
+               $(`#${item}`).text("");
+            })
+            $("#recommendation1").text("");
+            $("#recommendation2").text("");
+         }
+
+         function getPoints() {
+            selDIagnosticID = $("#search").val();
+            if(selDIagnosticID){
+
+               setLoading(true);
+               $.get('https://airtable-ai.onrender.com/api/points/getPoints', function (res) {
+                  setLoading(false);
+                  res = $.parseJSON(res);
+                  reloadItems(res)
+               })
+            } else{
+               window.alert("Please select the customer from the list.")
+            }
+         }
+      </script>
    </body>
 </html>

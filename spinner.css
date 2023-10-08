@@ -1,0 +1,123 @@
+li {
+   list-style-type: none;
+ }
+ 
+ ol {
+   margin: 0;
+   padding: 0;
+ }
+ 
+ body {
+   background: #eef;
+   height: 100vh;
+   overflow: hidden;
+ }
+ 
+ #ui {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   perspective: 600px;
+   transform-style: preserve-3d;
+ }
+ #ui::before {
+   content: "";
+   position: absolute;
+   width: 100px;
+   height: 5px;
+   background: rgba(0, 0, 30, 0.7);
+   top: 180px;
+   left: -50px;
+   filter: blur(15px);
+ }
+ #ui .dice {
+   position: absolute;
+   transform-style: preserve-3d;
+ }
+ #ui .dice.parent {
+   -webkit-animation: parentRotate 10000ms linear infinite;
+           animation: parentRotate 10000ms linear infinite;
+ }
+ #ui .dice.parent .dice_list_item {
+   border-top: 50px solid #001464;
+   border-right: 50px solid #001e6e;
+   border-bottom: 50px solid #002878;
+   border-left: 50px solid #003282;
+ }
+ #ui .dice.child {
+   -webkit-animation: childRotate 20000ms linear infinite;
+           animation: childRotate 20000ms linear infinite;
+ }
+ #ui .dice.child .dice_list_item {
+   border: 3px solid black;
+   box-shadow: 0 0 30px 10px rgba(0, 150, 255, 0.6);
+ }
+ #ui .dice_list {
+   transform-style: preserve-3d;
+ }
+ #ui .dice_list_item {
+   position: absolute;
+   width: 150px;
+   height: 150px;
+   background: rgba(255, 255, 255, 0.8);
+   box-sizing: border-box;
+   transform-style: preserve-3d;
+ }
+ #ui .dice_list_item:nth-child(1) {
+   transform: translate3d(-50%, -50%, 75px);
+ }
+ #ui .dice_list_item:nth-child(2) {
+   transform: translate3d(-50%, 0%, 0) rotateX(90deg);
+ }
+ #ui .dice_list_item:nth-child(3) {
+   transform: translate3d(0%, -50%, 0) rotateY(-90deg);
+ }
+ #ui .dice_list_item:nth-child(4) {
+   transform: translate3d(-100%, -50%, 0) rotateY(-90deg);
+ }
+ #ui .dice_list_item:nth-child(5) {
+   transform: translate3d(-50%, -100%, 0) rotateX(90deg);
+ }
+ #ui .dice_list_item:nth-child(6) {
+   transform: translate3d(-50%, -50%, -75px);
+ }
+ #ui .dice_list_item.break {
+   display: none;
+ }
+ #ui .dice_list_item.bottom {
+   filter: brightness(80%);
+ }
+ 
+ @-webkit-keyframes parentRotate {
+   0% {
+     transform: rotateX(0deg) rotateY(0deg);
+   }
+   100% {
+     transform: rotateX(360deg) rotateY(720deg);
+   }
+ }
+ 
+ @keyframes parentRotate {
+   0% {
+     transform: rotateX(0deg) rotateY(0deg);
+   }
+   100% {
+     transform: rotateX(360deg) rotateY(720deg);
+   }
+ }
+ @-webkit-keyframes childRotate {
+   0% {
+     transform: rotateX(0deg) rotateY(0deg) scale3d(0.4, 0.4, 0.4);
+   }
+   100% {
+     transform: rotateX(3600deg) rotateY(3600deg) scale3d(0.4, 0.4, 0.4);
+   }
+ }
+ @keyframes childRotate {
+   0% {
+     transform: rotateX(0deg) rotateY(0deg) scale3d(0.4, 0.4, 0.4);
+   }
+   100% {
+     transform: rotateX(3600deg) rotateY(3600deg) scale3d(0.4, 0.4, 0.4);
+   }
+ }
