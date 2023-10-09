@@ -88,7 +88,7 @@
             <div class="container" >
                <div class="row" style="padding: 26px; background-color: #1F2937;">
                   <div class="col-4">
-                     <h3 id="total_count" class=" text-white">Result <span id="name" class="sub-caption">(Customer: )</span></h3>
+                     <h3 id="total_count" class=" text-white">Result: </span></h3>
                   </div>
                   <div class="col-4">
                      <input
@@ -274,7 +274,8 @@
                setLoading(true);
                $.get('http://52.64.28.120:5001/api/points/getPoints', {DiagnosticID: selDIagnosticID}, function (res) {
                   setLoading(false);
-                  res = $.parseJSON(res);
+                  // res = $.parseJSON(res);
+                  console.log(res, 'res');
                   reloadItems(res)
                })
             } else{
