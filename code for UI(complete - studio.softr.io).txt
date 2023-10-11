@@ -1,0 +1,329 @@
+<style>
+    body{
+        overflow-y: auto;
+    }
+    #spinner{
+        position: fixed; 
+        z-index: 100;
+        left: 0; 
+        right: 0; 
+        top: 0; 
+        bottom: 0; 
+        background-color: rgba(49, 79, 205, 0.21);
+        display: none;
+        opacity: 0;
+        transition: all 0.3s ease-in;
+    }
+    .spinner-show{
+        display: block !important;
+        opacity: 1 !important;
+    }
+    #ui {
+       position: absolute;
+       top: 50%;
+       left: 50%;
+       perspective: 600px;
+       transform-style: preserve-3d;
+     }
+     #ui::before {
+       content: "";
+       position: absolute;
+       width: 100px;
+       height: 5px;
+       background: rgba(0, 0, 30, 0.7);
+       top: 180px;
+       left: -50px;
+       filter: blur(15px);
+     }
+     #ui .dice {
+       position: absolute;
+       transform-style: preserve-3d;
+     }
+     #ui .dice.parent {
+       -webkit-animation: parentRotate 10000ms linear infinite;
+               animation: parentRotate 10000ms linear infinite;
+     }
+     #ui .dice.parent .dice_list_item {
+       border-top: 50px solid #001464;
+       border-right: 50px solid #001e6e;
+       border-bottom: 50px solid #002878;
+       border-left: 50px solid #003282;
+     }
+     #ui .dice.child {
+       -webkit-animation: childRotate 20000ms linear infinite;
+               animation: childRotate 20000ms linear infinite;
+     }
+     #ui .dice.child .dice_list_item {
+       border: 3px solid black;
+       box-shadow: 0 0 30px 10px rgba(0, 150, 255, 0.6);
+     }
+     #ui .dice_list {
+       transform-style: preserve-3d;
+     }
+     #ui .dice_list_item {
+       position: absolute;
+       width: 150px;
+       height: 150px;
+       background: rgba(255, 255, 255, 0.8);
+       box-sizing: border-box;
+       transform-style: preserve-3d;
+     }
+     #ui .dice_list_item:nth-child(1) {
+       transform: translate3d(-50%, -50%, 75px);
+     }
+     #ui .dice_list_item:nth-child(2) {
+       transform: translate3d(-50%, 0%, 0) rotateX(90deg);
+     }
+     #ui .dice_list_item:nth-child(3) {
+       transform: translate3d(0%, -50%, 0) rotateY(-90deg);
+     }
+     #ui .dice_list_item:nth-child(4) {
+       transform: translate3d(-100%, -50%, 0) rotateY(-90deg);
+     }
+     #ui .dice_list_item:nth-child(5) {
+       transform: translate3d(-50%, -100%, 0) rotateX(90deg);
+     }
+     #ui .dice_list_item:nth-child(6) {
+       transform: translate3d(-50%, -50%, -75px);
+     }
+     #ui .dice_list_item.break {
+       display: none;
+     }
+     #ui .dice_list_item.bottom {
+       filter: brightness(80%);
+     }
+     
+     @-webkit-keyframes parentRotate {
+       0% {
+         transform: rotateX(0deg) rotateY(0deg);
+       }
+       100% {
+         transform: rotateX(360deg) rotateY(720deg);
+       }
+     }
+     
+     @keyframes parentRotate {
+       0% {
+         transform: rotateX(0deg) rotateY(0deg);
+       }
+       100% {
+         transform: rotateX(360deg) rotateY(720deg);
+       }
+     }
+     @-webkit-keyframes childRotate {
+       0% {
+         transform: rotateX(0deg) rotateY(0deg) scale3d(0.4, 0.4, 0.4);
+       }
+       100% {
+         transform: rotateX(3600deg) rotateY(3600deg) scale3d(0.4, 0.4, 0.4);
+       }
+     }
+     @keyframes childRotate {
+       0% {
+         transform: rotateX(0deg) rotateY(0deg) scale3d(0.4, 0.4, 0.4);
+       }
+       100% {
+         transform: rotateX(3600deg) rotateY(3600deg) scale3d(0.4, 0.4, 0.4);
+       }
+     }
+         
+</style>
+<div style="background-color: #2C3747;">
+    <div class="col-12">
+        <div class="container">
+           <div class="row text-center" style="padding: 26px; background-color: #1F2937;">
+            
+              <div class="col-12 col-sm-12 col-md-9 ">
+                 <input
+                    type="text"
+                    id="search"
+                    class="form-control custom-input w-100 mt-1"
+                    placeholder="Type the Diagnostic_ID..."
+                    style="margin:auto;">
+              </div>
+              <div class="col-12 col-sm-12 col-md-3 text-right">
+                 <input
+                    id="points_btn"
+                    class="btn btn-primary w-100 mt-1"
+                    type="button"
+                    value="Calculate"
+                    style="margin: auto; padding: 10px 30px; line-height: 1.5rem; font-size: 16px; border-radius: 30px;">
+              </div>
+           </div>
+    
+           <div class="row" style="background-color: #2C3A4F; padding-left:20px; margin-top: 15px;">
+              <h5 style="color: #5B759A;">Recommendations</h5>
+           </div>
+           
+           <div class="row mt-3">
+              <div class="col-12 col-sm-6 mt-1">
+                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                    <div style="font-size: 14px; padding: 10px 0 10px 20px; color: #585858; font-weight: bold;">Recommendation Top 1</div>
+                    <h3 id="recommendation1" class="text-center" style="padding-bottom: 10px;"></h3>
+                 </div>
+                    
+              </div>
+              <div class="col-12 col-sm-6 mt-1">
+                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                    <div style="font-size: 14px; padding: 10px 0 10px 20px; color: #585858; font-weight: bold;">Recommendation Top 2</div>
+                    <h3 id="recommendation2" class="text-center" style="padding-bottom: 10px;"></h3>
+                 </div>
+              </div>
+           </div>
+    
+           <div class="row" style="background-color: #2C3A4F; padding-left:20px; margin-top: 15px;">
+              <h5 class="text-center" style="color: #5B759A;">Points of Conditions</h5>
+           </div>
+    
+           <div class="row mt-3">
+              <div class="col-12 col-md-4 mt-1">
+                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">LF</div>
+                    <h3 id="LF" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                 </div>
+              </div>
+              <div class="col-12 col-md-4 mt-1">
+                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">LQS</div>
+                    <h3 id="LQS" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                 </div>
+              </div>
+              <div class="col-12 col-md-4 mt-1">
+                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">LYD</div>
+                    <h3 id="LYD" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                 </div>
+              </div>
+           </div>
+           <div class="row mt-3">
+              <div class="col-12 col-md-4 mt-1">
+                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">YinDeficiency</div>
+                    <h3 id="YinDeficiency" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                 </div>
+              </div>
+              <div class="col-12 col-md-4 mt-1">
+                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">Dampness</div>
+                    <h3 id="Dampness" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                 </div>
+              </div>
+              <div class="col-12 col-md-4 mt-1">
+                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">QD</div>
+                    <h3 id="QD" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                 </div>
+              </div>
+           </div>
+           <div class="row mt-3">
+              <div class="col-12 col-md-4 mt-1">
+                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">BS</div>
+                    <h3 id="BS" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                 </div>
+              </div>
+              <div class="col-12 col-md-4 mt-1">
+                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">KD</div>
+                    <h3 id="KD" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                 </div>
+              </div>
+              <div class="col-12 col-md-4 mt-1">
+                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
+                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">SD</div>
+                    <h3 id="SD" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+</div>
+<div id="spinner">
+     <div id="ui">
+        <div class="dice child">
+          <ol class="dice_list">
+            <li class="dice_list_item"></li>
+            <li class="dice_list_item"></li>
+            <li class="dice_list_item"></li>
+            <li class="dice_list_item"></li>
+            <li class="dice_list_item"></li>
+            <li class="dice_list_item"></li>
+          </ol>
+        </div>
+        <div class="dice parent">
+          <ol class="dice_list">
+            <li class="dice_list_item"></li>
+            <li class="dice_list_item break"></li>
+            <li class="dice_list_item"></li>
+            <li class="dice_list_item"></li>
+            <li class="dice_list_item bottom"></li>
+            <li class="dice_list_item"></li>
+          </ol>
+        </div>
+      </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.11.2.min.js" crossorigin="anonymous"></script>
+<script>
+     var selDIagnosticID;
+     const list = ['LF', 'LYD', 'LQS', 'YinDeficiency', 'Dampness', 'QD', 'BS', 'KD', 'SD', 'Recommendation - Top 1 Condition', 'Recommendation - Top 2'];
+    
+     $(document)
+        .ready(function () {
+           initializeUsers();
+           initializeEvents();
+        })
+    
+     function initializeUsers() {
+        return;
+     }
+    
+     function initializeEvents() {
+        $("#points_btn").on('click', getPoints);
+     }
+    
+     function setLoading(b_loading) {
+        if (b_loading) {
+           $("#spinner").addClass("spinner-show");
+           $("#points_btn").val("loading...");
+        } else {
+           $("#spinner").removeClass("spinner-show");
+           $("#points_btn").val("Calculate");
+        }
+     }
+    
+     function reloadItems(data){
+        console.log(data)
+        list.forEach(item => {
+           $(`#${item}`).text(data[`${item} Points`]);
+        })
+        $("#recommendation1").text(data["Recommendation - Top 1 Condition"]);
+        $("#recommendation2").text(data["Recommendation - Top 2"]);
+     }
+    
+     function clearItems(){
+        list.forEach(item => {
+           $(`#${item}`).text("");
+        })
+        $("#recommendation1").text("");
+        $("#recommendation2").text("");
+     }
+    
+     function getPoints() {
+        // window.alert("Btn clicked");
+        clearItems();
+        selDIagnosticID = $("#search").val();
+        if(selDIagnosticID){
+    
+          setLoading(true);
+          $.get('https://api.nectar4migraines.com/api/points/getPoints', {DiagnosticID: selDIagnosticID}, function (res) {
+              setLoading(false);
+              // res = $.parseJSON(res);
+              console.log(res, 'res');
+              reloadItems(res)
+          })
+        } else{
+          window.alert("Please select the customer from the list.")
+        }
+     }
+</script>
