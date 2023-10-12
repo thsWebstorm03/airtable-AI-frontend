@@ -1,7 +1,82 @@
 <style>
     body{
         overflow-y: auto;
-    }
+        background-color: #2C3747;
+        margin: 0 !important;
+     }
+    .main-container {
+        max-width: 1600px;
+        margin: auto;
+        padding: 15px;
+        background-color: #2C3747;
+     }
+     #points_btn{
+        margin: auto; 
+        padding: 10px 30px; 
+        line-height: 1.5rem; 
+        font-size: 16px; 
+        border-radius: 30px;
+     }
+     .sub-caption{
+        font-size: 20px;
+        color: #b9b9b9;
+     }
+     .custom-input {
+        background-color: #171F2B;
+        color: #FFFFFF;
+        border-width: 0;
+        padding: 10px 30px;
+        font-size: 18px;
+        height: 3rem;
+     }
+     .custom-list-item {
+        padding: 13px 24px;
+        border: 1px 0 0 0 solid #2A3647;
+        background: #00000010;
+        color: #FFF;
+        font-size: 18px;
+        line-height: 22px;
+        &:hover {
+           cursor: pointer;
+        }
+     }
+
+     #spinner{
+        position: fixed; 
+        z-index: 100;
+        left: 0; 
+        right: 0; 
+        top: 0; 
+        bottom: 0; 
+        background-color: rgba(49, 79, 205, 0.21);
+        display: none;
+        opacity: 0;
+        transition: all 0.3s ease-in;
+     }
+     .spinner-show{
+        display: block !important;
+        opacity: 1 !important;
+     }
+
+     .box-item{
+        background-color: #00000000;
+     }
+
+     .box-item-content{
+        background-color: #edf5ff; 
+        min-height: 90px;
+        margin-top: 10px;
+     }
+     .box-item-caption{
+        font-size: 14px; 
+        padding: 10px 0 10px 20px; 
+        color: #585858; 
+        font-weight: bold;
+     }
+     .box-item-value{
+        padding-bottom: 10px; 
+        font-weight: bold;
+     }
     #spinner{
         position: fixed; 
         z-index: 100;
@@ -19,30 +94,30 @@
         opacity: 1 !important;
     }
     #ui {
-       position: absolute;
-       top: 50%;
-       left: 50%;
-       perspective: 600px;
-       transform-style: preserve-3d;
-     }
-     #ui::before {
-       content: "";
-       position: absolute;
-       width: 100px;
-       height: 5px;
-       background: rgba(0, 0, 30, 0.7);
-       top: 180px;
-       left: -50px;
-       filter: blur(15px);
-     }
-     #ui .dice {
-       position: absolute;
-       transform-style: preserve-3d;
-     }
-     #ui .dice.parent {
-       -webkit-animation: parentRotate 10000ms linear infinite;
-               animation: parentRotate 10000ms linear infinite;
-     }
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        perspective: 600px;
+        transform-style: preserve-3d;
+    }
+    #ui::before {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: 5px;
+        background: rgba(0, 0, 30, 0.7);
+        top: 180px;
+        left: -50px;
+        filter: blur(15px);
+    }
+    #ui .dice {
+        position: absolute;
+        transform-style: preserve-3d;
+    }
+    #ui .dice.parent {
+        -webkit-animation: parentRotate 10000ms linear infinite;
+        animation: parentRotate 10000ms linear infinite;
+    }
      #ui .dice.parent .dice_list_item {
        border-top: 50px solid #001464;
        border-right: 50px solid #001e6e;
@@ -126,117 +201,133 @@
          transform: rotateX(3600deg) rotateY(3600deg) scale3d(0.4, 0.4, 0.4);
        }
      }
-         
+     
+
+    ::-webkit-scrollbar {
+       width: 12px;  
+       height: 15px; 
+    }
+    
+
+    ::-webkit-scrollbar-thumb {
+       background: #888; 
+       border-radius: 4px; 
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+       background: #555;  
+    }
+    
+    ::-webkit-scrollbar-track {
+       background: rgba(125, 128, 128, 0.815); 
+       border-radius: 4px;  
+    }
+    
+    ::-webkit-scrollbar-button {
+       display: none; 
+    }
 </style>
 <div style="background-color: #2C3747;">
-    <div class="col-12">
-        <div class="container">
-           <div class="row text-center" style="padding: 26px; background-color: #1F2937;">
-            
-              <div class="col-12 col-sm-12 col-md-9 ">
-                 <input
-                    type="text"
-                    id="search"
-                    class="form-control custom-input w-100 mt-1"
-                    placeholder="Type the Diagnostic_ID..."
-                    style="margin:auto;">
-              </div>
-              <div class="col-12 col-sm-12 col-md-3 text-right">
-                 <input
-                    id="points_btn"
-                    class="btn btn-primary w-100 mt-1"
-                    type="button"
-                    value="Calculate"
-                    style="margin: auto; padding: 10px 30px; line-height: 1.5rem; font-size: 16px; border-radius: 30px;">
-              </div>
-           </div>
-    
-           <div class="row" style="background-color: #2C3A4F; padding-left:20px; margin-top: 15px;">
-              <h5 style="color: #5B759A;">Recommendations</h5>
-           </div>
-           
-           <div class="row mt-3">
-              <div class="col-12 col-sm-6 mt-1">
-                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
-                    <div style="font-size: 14px; padding: 10px 0 10px 20px; color: #585858; font-weight: bold;">Recommendation Top 1</div>
-                    <h3 id="recommendation1" class="text-center" style="padding-bottom: 10px;"></h3>
-                 </div>
-                    
-              </div>
-              <div class="col-12 col-sm-6 mt-1">
-                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
-                    <div style="font-size: 14px; padding: 10px 0 10px 20px; color: #585858; font-weight: bold;">Recommendation Top 2</div>
-                    <h3 id="recommendation2" class="text-center" style="padding-bottom: 10px;"></h3>
-                 </div>
-              </div>
-           </div>
-    
-           <div class="row" style="background-color: #2C3A4F; padding-left:20px; margin-top: 15px;">
-              <h5 class="text-center" style="color: #5B759A;">Points of Conditions</h5>
-           </div>
-    
-           <div class="row mt-3">
-              <div class="col-12 col-md-4 mt-1">
-                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
-                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">LF</div>
-                    <h3 id="LF" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
-                 </div>
-              </div>
-              <div class="col-12 col-md-4 mt-1">
-                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
-                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">LQS</div>
-                    <h3 id="LQS" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
-                 </div>
-              </div>
-              <div class="col-12 col-md-4 mt-1">
-                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
-                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">LYD</div>
-                    <h3 id="LYD" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
-                 </div>
-              </div>
-           </div>
-           <div class="row mt-3">
-              <div class="col-12 col-md-4 mt-1">
-                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
-                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">YinDeficiency</div>
-                    <h3 id="YinDeficiency" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
-                 </div>
-              </div>
-              <div class="col-12 col-md-4 mt-1">
-                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
-                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">Dampness</div>
-                    <h3 id="Dampness" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
-                 </div>
-              </div>
-              <div class="col-12 col-md-4 mt-1">
-                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
-                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">QD</div>
-                    <h3 id="QD" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
-                 </div>
-              </div>
-           </div>
-           <div class="row mt-3">
-              <div class="col-12 col-md-4 mt-1">
-                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
-                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">BS</div>
-                    <h3 id="BS" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
-                 </div>
-              </div>
-              <div class="col-12 col-md-4 mt-1">
-                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
-                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">KD</div>
-                    <h3 id="KD" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
-                 </div>
-              </div>
-              <div class="col-12 col-md-4 mt-1">
-                 <div style="background-color: #e6fbff; height: 100%; min-height: 90px;">
-                    <div style="font-size: 14px; padding: 10px 0 10px 20px;">SD</div>
-                    <h3 id="SD" class="text-center" style="padding-bottom: 10px; font-weight: bold;"></h3>
-                 </div>
-              </div>
-           </div>
-        </div>
-     </div>
+    <div class="container" >
+         <div class="row text-center" style="margin: auto; padding: 15px 10px; background-color: #1F2937; border-radius: 15px;">
+            <div class="col-12 col-sm-12 col-md-9 ">
+               <input
+                  type="text"
+                  id="search"
+                  class="form-control custom-input w-100 mt-1"
+                  placeholder="Type the Diagnostic_ID..."
+                  style="margin:auto;border-radius: 25px;">
+            </div>
+            <div class="col-12 col-sm-12 col-md-3 text-right">
+               <input
+                  id="points_btn"
+                  class="btn btn-primary w-100 mt-1"
+                  type="button"
+                  value="Calculate"
+                  style="margin: auto; padding: 10px 30px; line-height: 1.5rem; font-size: 16px; border-radius: 30px;">
+            </div>
+         </div>
+         <div class="row" style="background-color: #2C3A4F; padding-left:20px;margin: auto; margin-top: 25px;">
+            <h5 style="color: #5B759A;">Recommendations</h5>
+         </div>
+         <div class="row mt-1 gap-1">
+            <div class="box-item col-12 col-sm-6">
+               <div class="box-item-content">
+                  <div class="box-item-caption">Recommendation Top 1</div>
+                  <h3 id="recommendation1" class="text-center box-item-value"></h3>
+               </div>
+                  
+            </div>
+            <div class="box-item col-12 col-sm-6">
+               <div class="box-item-content">
+                  <div class="box-item-caption">Recommendation Top 2</div>
+                  <h3 id="recommendation2" class="text-center box-item-value"></h3>
+               </div>
+            </div>
+         </div>
+
+         <div class="row" style="background-color: #2C3A4F; padding-left:20px; margin: auto; margin-top: 25px;">
+            <h5 class="text-center" style="color: #5B759A;">Points of Conditions</h5>
+         </div>
+
+         <div class="row mt-1">
+            <div class="col-12 col-md-4">
+               <div class="box-item-content">
+                  <div class="box-item-caption">LF</div>
+                  <h3 id="LF" class="text-center box-item-value" ></h3>
+               </div>
+            </div>
+            <div class="col-12 col-md-4">
+               <div class="box-item-content">
+                  <div class="box-item-caption">LQS</div>
+                  <h3 id="LQS" class="text-center box-item-value" ></h3>
+               </div>
+            </div>
+            <div class="col-12 col-md-4">
+               <div class="box-item-content">
+                  <div class="box-item-caption">LYD</div>
+                  <h3 id="LYD" class="text-center box-item-value" ></h3>
+               </div>
+            </div>
+         
+            <div class="col-12 col-md-4">
+               <div class="box-item-content">
+                  <div class="box-item-caption">YinDeficiency</div>
+                  <h3 id="YinDeficiency" class="text-center box-item-value" ></h3>
+               </div>
+            </div>
+            <div class="col-12 col-md-4">
+               <div class="box-item-content">
+                  <div class="box-item-caption">Dampness</div>
+                  <h3 id="Dampness" class="text-center box-item-value" ></h3>
+               </div>
+            </div>
+            <div class="col-12 col-md-4">
+               <div class="box-item-content">
+                  <div class="box-item-caption">QD</div>
+                  <h3 id="QD" class="text-center box-item-value" ></h3>
+               </div>
+            </div>
+        
+            <div class="col-12 col-md-4">
+               <div class="box-item-content">
+                  <div class="box-item-caption">BS</div>
+                  <h3 id="BS" class="text-center box-item-value" ></h3>
+               </div>
+            </div>
+            <div class="col-12 col-md-4">
+               <div class="box-item-content">
+                  <div class="box-item-caption">KD</div>
+                  <h3 id="KD" class="text-center box-item-value" ></h3>
+               </div>
+            </div>
+            <div class="col-12 col-md-4">
+               <div class="box-item-content">
+                  <div class="box-item-caption">SD</div>
+                  <h3 id="SD" class="text-center box-item-value" ></h3>
+               </div>
+            </div>
+         </div>
 </div>
 <div id="spinner">
      <div id="ui">
