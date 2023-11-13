@@ -269,7 +269,7 @@
             if(selDIagnosticID){
 
                setLoading(true);
-               $.get('https://api.nectar4migraines.com/api/points/getPoints', {DiagnosticID: selDIagnosticID}, function (res) {
+               $.get('https://gapi.nectar4migraines.com/api/points/getPoints', {DiagnosticID: selDIagnosticID}, function (res) {
                   setLoading(false);
                   // res = $.parseJSON(res);
                   console.log(res, 'res');
